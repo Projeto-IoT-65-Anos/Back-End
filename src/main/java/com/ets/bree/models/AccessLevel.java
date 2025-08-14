@@ -1,4 +1,4 @@
-package com.ets.models;
+package com.ets.bree.models;
 
 import jakarta.persistence.*;
 
@@ -10,7 +10,7 @@ public class AccessLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 15)
+    @Column(name = "access_levels", nullable = false, length = 15)
     private String access_level;
 
     public long getId() {

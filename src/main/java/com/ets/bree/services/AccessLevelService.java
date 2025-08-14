@@ -1,7 +1,7 @@
-package com.ets.services;
+package com.ets.bree.services;
 
-import com.ets.models.AccessLevel;
-import com.ets.repositories.AccessLevelRepository;
+import com.ets.bree.models.AccessLevel;
+import com.ets.bree.repositories.AccessLevelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

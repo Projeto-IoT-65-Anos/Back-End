@@ -1,4 +1,4 @@
-package com.ets.models;
+package com.ets.bree.models;
 
 import jakarta.persistence.*;
 

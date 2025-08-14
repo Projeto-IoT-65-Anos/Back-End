@@ -1,6 +1,6 @@
-package com.ets.repositories;
+package com.ets.bree.repositories;
 
-import com.ets.models.User;
+import com.ets.bree.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

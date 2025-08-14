@@ -1,7 +1,7 @@
-package com.ets.controllers;
+package com.ets.bree.controllers;
 
-import com.ets.models.AccessLevel;
-import com.ets.services.AccessLevelService;
+import com.ets.bree.models.AccessLevel;
+import com.ets.bree.services.AccessLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
