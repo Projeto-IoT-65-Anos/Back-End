@@ -1,10 +1,10 @@
-package models;
+package com.ets.models;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="access_levels")
-public class AccessLevels {
+public class AccessLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
