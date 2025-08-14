@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping("/access_levels")
 public class AccessLevelController {
 
@@ -18,4 +19,9 @@ public class AccessLevelController {
     public ResponseEntity<List<AccessLevel>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
+
+//    @GetMapping
+//    public String teste(){
+//        return "Hello";
+//    }
 }
