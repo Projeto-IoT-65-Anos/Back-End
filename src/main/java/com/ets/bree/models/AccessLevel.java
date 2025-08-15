@@ -11,7 +11,7 @@ public class AccessLevel {
     private long id;
 
     @Column(name = "access_levels", nullable = false, length = 15)
-    private String access_level;
+    private String accessLevel;
 
     public long getId() {
         return id;
@@ -22,10 +22,10 @@ public class AccessLevel {
     }
 
     public String getAccess_level() {
-        return access_level;
+        return accessLevel;
     }
 
     public void setAccess_level(String access_level) {
-        this.access_level = access_level;
+        this.accessLevel = accessLevel;
     }
 }

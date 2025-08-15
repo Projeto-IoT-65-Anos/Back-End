@@ -1,4 +1,4 @@
 package com.ets.bree.dtos;
 
-public record AccessLevelDto(String access_level) {
+public record AccessLevelDto(String accessLevel) {
 }
