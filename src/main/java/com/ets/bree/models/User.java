@@ -8,13 +8,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false, length = 50)
     private String name;
 
     @Column(name="password_hash", nullable = false, length = 64)
-    private String passwordHash;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "access_level_id", nullable = false)
@@ -36,12 +36,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword_hash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword_hash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public AccessLevel getAccessLevel() {

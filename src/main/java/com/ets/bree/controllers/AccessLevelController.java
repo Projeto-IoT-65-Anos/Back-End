@@ -25,8 +25,7 @@ public class AccessLevelController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getAccessLevel(@PathVariable Long id) {
         Optional<AccessLevel> level = service.getById(id);
-        if(level.isPresent()) return ResponseEntity.ok(level.get());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("404 Not Found");
+        return level.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("404 Not Found"));
     }
 
     @PostMapping
@@ -37,7 +36,6 @@ public class AccessLevelController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAccessLevel(@PathVariable Long id) {
         Optional<AccessLevel> level = service.delete(id);
-        if(level.isPresent()) return ResponseEntity.ok(level.get());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
+        return level.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found"));
     }
 }

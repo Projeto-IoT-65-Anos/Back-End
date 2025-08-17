@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -24,6 +25,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> postUser(@RequestBody UserDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
+        Optional<User> user = service.post(dto);
+        return user.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
