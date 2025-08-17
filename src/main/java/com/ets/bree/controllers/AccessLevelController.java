@@ -33,9 +33,9 @@ public class AccessLevelController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteAccessLevel(@PathVariable Long id) {
-        Optional<AccessLevel> level = service.delete(id);
-        return level.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found"));
+    @PutMapping("/{id}")
+    public ResponseEntity<AccessLevel> putAccessLevel(@PathVariable long id, @RequestBody AccessLevelDto dto) {
+        Optional<AccessLevel> level = service.getById(id);
+        return level.map(accessLevel -> {return ResponseEntity.ok(service.put(accessLevel, dto));}).orElse(ResponseEntity.notFound().build());
     }
 }

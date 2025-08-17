@@ -31,12 +31,10 @@ public class AccessLevelService {
         return accessLevel;
     }
 
-    public Optional<AccessLevel> delete(Long id) {
-        Optional<AccessLevel> accessLevel = repository.findById(id);
-        if(accessLevel.isPresent()) {
-            repository.delete(accessLevel.get());
-        }
-        return accessLevel;
+    public AccessLevel put(AccessLevel level, AccessLevelDto dto) {
+        BeanUtils.copyProperties(dto, level);
+        repository.save(level);
+        return level;
     }
 
 }
