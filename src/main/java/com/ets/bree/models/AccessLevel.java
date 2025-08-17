@@ -25,7 +25,7 @@ public class AccessLevel {
         return accessLevel;
     }
 
-    public void setAccessLevel(String access_level) {
+    public void setAccessLevel(String accessLevel) {
         this.accessLevel = accessLevel;
     }
 }

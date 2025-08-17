@@ -1,6 +1,6 @@
 CREATE TABLE access_levels (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    access_level VARCHAR(15)
+    access_level VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE users(

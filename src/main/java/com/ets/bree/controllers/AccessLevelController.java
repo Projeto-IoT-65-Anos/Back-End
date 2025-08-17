@@ -31,7 +31,6 @@ public class AccessLevelController {
 
     @PostMapping
     public ResponseEntity<AccessLevel> postAccessLevel(@RequestBody AccessLevelDto dto) {
-        HttpHeaders headers = new HttpHeaders();
         return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
     }
 
