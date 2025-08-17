@@ -3,6 +3,7 @@ import com.ets.bree.dtos.AccessLevelDto;
 import com.ets.bree.models.AccessLevel;
 import com.ets.bree.services.AccessLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class AccessLevelController {
 
     @PostMapping
     public ResponseEntity<AccessLevel> postAccessLevel(@RequestBody AccessLevelDto dto) {
+        HttpHeaders headers = new HttpHeaders();
         return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
     }
 

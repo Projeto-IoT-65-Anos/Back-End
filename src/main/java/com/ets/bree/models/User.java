@@ -13,8 +13,8 @@ public class User {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(nullable = false, length = 64)
-    private String password_hash;
+    @Column(name="password_hash", nullable = false, length = 64)
+    private String passwordHash;
 
     @ManyToOne
     @JoinColumn(name = "access_level_id", nullable = false)
@@ -37,11 +37,11 @@ public class User {
     }
 
     public String getPassword_hash() {
-        return password_hash;
+        return passwordHash;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPassword_hash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public AccessLevel getAccessLevel() {

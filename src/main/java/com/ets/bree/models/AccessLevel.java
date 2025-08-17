@@ -10,7 +10,7 @@ public class AccessLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "access_levels", nullable = false, length = 15)
+    @Column(name = "access_level", nullable = false, length = 15)
     private String accessLevel;
 
     public long getId() {
@@ -21,11 +21,11 @@ public class AccessLevel {
         this.id = id;
     }
 
-    public String getAccess_level() {
+    public String getAccessLevel() {
         return accessLevel;
     }
 
-    public void setAccess_level(String access_level) {
+    public void setAccessLevel(String access_level) {
         this.accessLevel = accessLevel;
     }
 }

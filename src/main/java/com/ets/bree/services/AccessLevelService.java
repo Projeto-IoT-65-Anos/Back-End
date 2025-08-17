@@ -25,7 +25,6 @@ public class AccessLevelService {
     }
 
     public AccessLevel post(AccessLevelDto dto) {
-        System.out.println("DTO " + dto);
         AccessLevel accessLevel = new AccessLevel();
         BeanUtils.copyProperties(dto, accessLevel);
         repository.save(accessLevel);
