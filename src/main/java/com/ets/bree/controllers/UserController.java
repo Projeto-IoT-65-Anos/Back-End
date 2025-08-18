@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id, @RequestBody UserDto dto) {
+    public ResponseEntity<User> getUser(@PathVariable long id) {
         Optional<User> user = service.getById(id);
         return user.map(_ -> ResponseEntity.ok(user.get())).orElse(ResponseEntity.notFound().build());
     }
@@ -37,9 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<User>> putUser(@PathVariable long id, UserDto dto) {
-        Optional<User> oUser = service.getById(id);
-        return oUser.map(user -> ResponseEntity.ok(service.put(user, dto))).orElse(ResponseEntity.notFound().build());
-    }
+    public ResponseEntity<User> putUser(@PathVariable long id, UserDto dto) {
 
+    }
 }

@@ -6,6 +6,7 @@ import com.ets.bree.models.User;
 import com.ets.bree.repositories.AccessLevelRepository;
 import com.ets.bree.repositories.UserRepository;
 import com.ets.bree.utils.EncryptingUtils;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,12 +42,16 @@ public class UserService {
         });
     }
 
-    public Optional<User> put(User user, UserDto dto) {
-        BeanUtils.copyProperties(dto, user);
-        Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
-        return accessLevel.map(level -> {
-            user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
-            user.setAccessLevel(level);
+    public User put(Long id, UserDto dto) {
+        Optional<User> oUser = repository.findById(id);
+        User updateUser = oUser.map(user -> {
+            if(dto.name() != null) user.setName(dto.name());
+            if(dto.password() != null) user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
+            if(dto.accessLevelID() != null) {
+                Optional<AccessLevel> level = accessLevelRepository.findById(dto.accessLevelID());
+                AccessLevel accessLevel = level.flatMap(_ -> level).orElse(oUser.get().getAccessLevel());
+                user.setAccessLevel(accessLevel);
+            }
             return user;
         });
     }
