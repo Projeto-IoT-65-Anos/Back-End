@@ -19,8 +19,14 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable long id, @RequestBody UserDto dto) {
+        Optional<User> user = service.getById(id);
+        return user.map(_ -> ResponseEntity.ok(user.get())).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -29,4 +35,11 @@ public class UserController {
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Optional<User>> putUser(@PathVariable long id, UserDto dto) {
+        Optional<User> oUser = service.getById(id);
+        return oUser.map(user -> ResponseEntity.ok(service.put(user, dto))).orElse(ResponseEntity.notFound().build());
+    }
+
 }

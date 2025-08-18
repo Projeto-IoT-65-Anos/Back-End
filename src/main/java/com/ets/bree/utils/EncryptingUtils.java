@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class EncryptingUtils {
 
-    public static String encryptPassword(String password) {
+    public static String encrypt(String password) {
         String newPassword;
 
         try {

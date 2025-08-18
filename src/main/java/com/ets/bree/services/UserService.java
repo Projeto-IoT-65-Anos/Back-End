@@ -8,6 +8,7 @@ import com.ets.bree.repositories.UserRepository;
 import com.ets.bree.utils.EncryptingUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +26,29 @@ public class UserService {
         return repository.findAll();
     }
 
+    public Optional<User> getById(long id) {
+        return repository.findById(id);
+    }
+
     public Optional<User> post(UserDto dto) {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-        Optional<User> oUser;
+        user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
         Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
-        oUser = accessLevel.map(level -> {
+        return accessLevel.map(level -> {
             user.setAccessLevel(level);
-            user.setPasswordHash(EncryptingUtils.encryptPassword(dto.password()));
             return repository.save(user);
         });
-        return oUser;
+    }
+
+    public Optional<User> put(User user, UserDto dto) {
+        BeanUtils.copyProperties(dto, user);
+        Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
+        return accessLevel.map(level -> {
+            user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
+            user.setAccessLevel(level);
+            return user;
+        });
     }
 
 }
