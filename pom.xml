@@ -8,6 +8,7 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.ets</groupId>
 	<artifactId>bree</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -63,8 +64,7 @@
         </dependency>
 
 
-    </dependencies>
-
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
