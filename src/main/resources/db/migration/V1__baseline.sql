@@ -8,12 +8,12 @@ CREATE TABLE users(
     name VARCHAR(50) NOT NULL,
     password_hash VARCHAR(64) NOT NULL,
     access_level_id BIGINT NOT NULL,
-    CONSTRAINT fk_accessLevel FOREIGN KEY (access_level_id) REFERENCES access_levels(id)
+    FOREIGN KEY (access_level_id) REFERENCES access_levels(id)
 );
 
 CREATE TABLE status (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    status VARCHAR(15)
+    status VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE devices (
