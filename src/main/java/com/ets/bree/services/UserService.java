@@ -6,10 +6,8 @@ import com.ets.bree.models.User;
 import com.ets.bree.repositories.AccessLevelRepository;
 import com.ets.bree.repositories.UserRepository;
 import com.ets.bree.utils.EncryptingUtils;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +50,14 @@ public class UserService {
                 AccessLevel accessLevel = level.flatMap(_ -> level).orElse(oUser.get().getAccessLevel());
                 user.setAccessLevel(accessLevel);
             }
+            repository.save(user);
             return user;
         });
+    }
+
+    public Optional<User> delete(Long id) {
+        Optional<User> oUser = repository.findById(id);
+        return oUser.map(user -> {repository.delete(user); return user;});
     }
 
 }

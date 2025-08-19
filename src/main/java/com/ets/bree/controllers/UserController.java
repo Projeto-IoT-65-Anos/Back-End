@@ -42,4 +42,10 @@ public class UserController {
         return oUser.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable long id) {
+        return service.delete(id).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
