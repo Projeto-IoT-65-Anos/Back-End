@@ -37,7 +37,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> putUser(@PathVariable long id, UserDto dto) {
-
+    public ResponseEntity<User> putUser(@PathVariable long id, @RequestBody UserDto dto) {
+        Optional<User> oUser = service.put(id, dto);
+        return oUser.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

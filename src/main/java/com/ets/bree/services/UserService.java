@@ -42,9 +42,9 @@ public class UserService {
         });
     }
 
-    public User put(Long id, UserDto dto) {
+    public Optional<User> put(Long id, UserDto dto) {
         Optional<User> oUser = repository.findById(id);
-        User updateUser = oUser.map(user -> {
+        return oUser.map(user -> {
             if(dto.name() != null) user.setName(dto.name());
             if(dto.password() != null) user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
             if(dto.accessLevelID() != null) {
