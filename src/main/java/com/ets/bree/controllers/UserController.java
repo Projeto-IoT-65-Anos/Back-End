@@ -4,6 +4,7 @@ import com.ets.bree.dtos.UserDto;
 import com.ets.bree.models.User;
 import com.ets.bree.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +39,14 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> putUser(@PathVariable long id, @RequestBody UserDto dto) {
         Optional<User> oUser = service.put(id, dto);
-        return oUser.map(ResponseEntity::ok)
+        return oUser.map(u -> ResponseEntity.accepted().body(u))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable long id) {
-        return service.delete(id).map(ResponseEntity::ok)
+    public ResponseEntity<Object> deleteUser(@PathVariable long id) {
+        return service.delete(id)
+                .map(_ -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());
     }
 }

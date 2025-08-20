@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/status")
@@ -32,5 +33,10 @@ public class StatusController {
         return ResponseEntity.ok(service.post(dto));
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Status> putStatus(@PathVariable long id, @RequestBody StatusDto dto) {
+        Optional<Status> status = service.put(id, dto);
+        return status.map(s -> ResponseEntity.accepted().body(s))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

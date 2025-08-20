@@ -36,6 +36,7 @@ public class AccessLevelController {
     @PutMapping("/{id}")
     public ResponseEntity<AccessLevel> putAccessLevel(@PathVariable long id, @RequestBody AccessLevelDto dto) {
         Optional<AccessLevel> level = service.getById(id);
-        return level.map(accessLevel -> {return ResponseEntity.ok(service.put(accessLevel, dto));}).orElse(ResponseEntity.notFound().build());
+        return level.map(accessLevel -> {return ResponseEntity.accepted().body(service.put(accessLevel, dto));})
+                .orElse(ResponseEntity.notFound().build());
     }
 }

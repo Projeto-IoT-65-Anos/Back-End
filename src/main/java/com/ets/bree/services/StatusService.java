@@ -30,4 +30,9 @@ public class StatusService {
         repository.save(status);
         return status;
     }
+
+    public Optional<Status> put(long id, StatusDto dto) {
+        Optional<Status> status = repository.findById(id);
+        return status.map(s -> {BeanUtils.copyProperties(dto, s); repository.save(s); return s;});
+    }
 }
