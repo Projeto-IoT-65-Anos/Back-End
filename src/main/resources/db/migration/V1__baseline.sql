@@ -18,6 +18,7 @@ CREATE TABLE status (
 
 CREATE TABLE devices (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	token VARCHAR(64) NOT NULL,
 	name VARCHAR(64) NOT NULL,
     description LONGTEXT,
     location VARCHAR(64) NOT NULL,
