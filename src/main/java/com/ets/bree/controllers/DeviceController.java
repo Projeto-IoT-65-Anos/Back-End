@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/devices")
@@ -32,6 +33,13 @@ public class DeviceController {
     public ResponseEntity<Device> postDevice(@RequestBody DeviceDto dto) {
         return service.post(dto)
                 .map(d -> ResponseEntity.status(HttpStatus.CREATED).body(d))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Device> patchDevice(@PathVariable long id, @RequestBody Map<String, Object> fields) {
+        return service.patch(id, fields)
+                .map(d -> ResponseEntity.accepted().body(d))
                 .orElse(ResponseEntity.notFound().build());
     }
 }
