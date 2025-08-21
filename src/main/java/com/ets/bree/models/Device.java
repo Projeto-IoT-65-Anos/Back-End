@@ -24,13 +24,15 @@ public class Device {
     @Column(name = "location", nullable = false, length = 64)
     private String location;
 
-    @Column(name = "status_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
     @Column(name = "register_date", nullable = false)
     private LocalDateTime registerDate;
 
-    @Column(name = "owner_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     public Long getId() {
