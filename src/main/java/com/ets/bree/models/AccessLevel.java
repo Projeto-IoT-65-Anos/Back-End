@@ -3,7 +3,7 @@ package com.ets.bree.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="access_levels")
+@Table(name="access_level")
 public class AccessLevel {
 
     @Id
