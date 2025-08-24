@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -40,6 +41,13 @@ public class UserController {
     public ResponseEntity<User> putUser(@PathVariable long id, @RequestBody UserDto dto) {
         Optional<User> oUser = service.put(id, dto);
         return oUser.map(u -> ResponseEntity.accepted().body(u))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> patchUser(@PathVariable long id, @RequestBody Map<String, Object> fields) {
+        return service.patch(id, fields)
+                .map(u -> ResponseEntity.accepted().body(u))
                 .orElse(ResponseEntity.notFound().build());
     }
 

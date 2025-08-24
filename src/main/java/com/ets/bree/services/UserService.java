@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -53,6 +54,25 @@ public class UserService {
             repository.save(user);
             return user;
         });
+    }
+
+    public Optional<User> patch(Long id, Map<String, Object> fields) {
+        Optional<User> user = repository.findById(id);
+        return user.map(u -> {
+            fields.forEach((String property, Object value) -> {
+                switch (property)
+                        {
+                            case "name" -> u.setName((String)value);
+                            case "password" -> u.setPasswordHash(EncryptingUtils.encrypt((String)value));
+                            case "accessLevelID" -> {
+                                Optional<AccessLevel> level = accessLevelRepository.findById((long)value);
+                                level.ifPresent(u::setAccessLevel);
+                            }
+                        }
+            });
+            repository.save(u);
+            return u;
+                });
     }
 
     public Optional<User> delete(Long id) {
