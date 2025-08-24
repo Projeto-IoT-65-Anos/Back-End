@@ -65,7 +65,7 @@ public class UserService {
                             case "name" -> u.setName((String)value);
                             case "password" -> u.setPasswordHash(EncryptingUtils.encrypt((String)value));
                             case "accessLevelID" -> {
-                                Optional<AccessLevel> level = accessLevelRepository.findById((long)value);
+                                Optional<AccessLevel> level = accessLevelRepository.findById(((Integer)value).longValue());
                                 level.ifPresent(u::setAccessLevel);
                             }
                         }
