@@ -8,7 +8,9 @@ import com.ets.bree.repositories.RegisterRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,7 @@ public class RegisterService {
         Optional<Device> device = deviceRepository.findById(dto.deviceID());
         return device
                 .map(d -> {
+                    register.setDate(LocalDateTime.now());
                     register.setDevice(d);
                     return repository.save(register);
                 });
