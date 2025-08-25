@@ -38,4 +38,12 @@ public class RegisterService {
                     return repository.save(register);
                 });
     }
+
+    public Optional<Register> delete(long id) {
+        Optional<Register> register = repository.findById(id);
+        return register.map(r -> {
+            repository.delete(r);
+            return r;
+        });
+    }
 }

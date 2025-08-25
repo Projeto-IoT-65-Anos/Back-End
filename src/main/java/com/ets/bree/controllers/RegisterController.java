@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/registers")
@@ -33,6 +33,14 @@ public class RegisterController {
     public ResponseEntity<Register> postRegister(@RequestBody RegisterDto dto) {
         return service.post(dto)
                 .map(r -> ResponseEntity.status(HttpStatus.CREATED).body(r))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteRegister(@PathVariable long id) {
+        Optional<Register> register = service.delete(id);
+        return register
+                .map(_ -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());
     }
 }
