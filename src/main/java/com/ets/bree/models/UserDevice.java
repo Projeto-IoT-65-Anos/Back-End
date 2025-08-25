@@ -12,11 +12,11 @@ public class UserDevice {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private long userID;
+    private User user;
 
     @OneToMany
-    @JoinColumn(name = "user_id", nullable = false)
-    private long deviceID;
+    @JoinColumn(name = "device_id", nullable = false)
+    private Device device;
 
     public long getId() {
         return id;
@@ -26,19 +26,19 @@ public class UserDevice {
         this.id = id;
     }
 
-    public long getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getDeviceID() {
-        return deviceID;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setDeviceID(long deviceID) {
-        this.deviceID = deviceID;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }
