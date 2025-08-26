@@ -36,8 +36,7 @@ public class UserDeviceService {
     public Optional<UserDevice> postUserDevice(UserDeviceDto dto) {
         UserDevice userDevice = new UserDevice();
         Optional<User> user = userRepository.findById(dto.userID());
-        return user
-                .map(u -> {
+        return user.flatMap(u -> {
                     userDevice.setUser(u);
                     Optional <Device> device = deviceRepository.findById(dto.deviceID());
                     return device.map(d -> {
