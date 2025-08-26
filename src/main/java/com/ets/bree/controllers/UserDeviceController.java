@@ -4,13 +4,14 @@ import com.ets.bree.dtos.UserDeviceDto;
 import com.ets.bree.models.UserDevice;
 import com.ets.bree.services.UserDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user_device")
 public class UserDeviceController {
 
     @Autowired
@@ -30,6 +31,15 @@ public class UserDeviceController {
 
     @PostMapping
     public ResponseEntity<UserDevice> postUserDevice(@RequestBody UserDeviceDto dto) {
+        return service.post(dto)
+                .map(ud -> ResponseEntity.status(HttpStatus.CREATED).body(ud))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUserDevice(@PathVariable long id) {
+        return service.delete(id)
+                .map(_ -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }

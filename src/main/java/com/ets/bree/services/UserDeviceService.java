@@ -33,7 +33,7 @@ public class UserDeviceService {
         return repository.findById(id);
     }
 
-    public Optional<UserDevice> postUserDevice(UserDeviceDto dto) {
+    public Optional<UserDevice> post(UserDeviceDto dto) {
         UserDevice userDevice = new UserDevice();
         Optional<User> user = userRepository.findById(dto.userID());
         return user.flatMap(u -> {
@@ -45,4 +45,12 @@ public class UserDeviceService {
                     });
                 });
     }
+
+    public Optional<UserDevice> delete(long id) {
+        Optional<UserDevice> userDevice = repository.findById(id);
+        return userDevice.map(ud -> {
+            repository.delete(ud);
+            return ud;
+            });
+        };
 }

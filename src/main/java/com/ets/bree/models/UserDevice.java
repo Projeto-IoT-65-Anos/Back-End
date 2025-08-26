@@ -3,7 +3,7 @@ package com.ets.bree.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "user_device")
 public class UserDevice {
 
     @Id
@@ -14,7 +14,7 @@ public class UserDevice {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
