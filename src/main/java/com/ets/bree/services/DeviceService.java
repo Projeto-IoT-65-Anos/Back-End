@@ -7,15 +7,14 @@ import com.ets.bree.models.User;
 import com.ets.bree.repositories.DeviceRepository;
 import com.ets.bree.repositories.StatusRepository;
 import com.ets.bree.repositories.UserRepository;
+import com.ets.bree.utils.EncryptingUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DeviceService {
@@ -26,6 +25,24 @@ public class DeviceService {
     private StatusRepository statusRepository;
     @Autowired
     private UserRepository userRepository;
+
+    Random random = new Random();
+
+    private String generateToken() {
+        int length = 8;
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String token;
+        StringBuilder builder = new StringBuilder(length);
+        do {
+            for(int i = 0; i < length; i++) {
+                builder.append(alphabet.charAt(random.nextInt(alphabet.length())));
+            }
+            String identifier = builder.toString();
+            int num = random.nextInt(6969);
+            token = identifier + "-" + EncryptingUtils.encrypt(String.valueOf(num)).substring(0, 16);
+        } while(repository.existsByToken(token));
+        return token;
+    }
 
     public List<Device> getAll() {
         return repository.findAll();
@@ -39,6 +56,7 @@ public class DeviceService {
         Device device = new Device();
         BeanUtils.copyProperties(dto, device);
         device.setRegisterDate(LocalDateTime.now());
+        device.setToken(generateToken());
         return statusRepository.findById(dto.statusID()).map(s -> {
             device.setStatus(s);
             return userRepository.findById(dto.ownerID()).map(o -> {
