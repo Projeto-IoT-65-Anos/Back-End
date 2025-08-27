@@ -5,5 +5,7 @@ CREATE TABLE gadget (
     description TEXT,
     location VARCHAR(64) NOT NULL,
     status_id BIGINT NOT NULL DEFAULT 1,
-    FOREIGN KEY (status_id) REFERENCES status(id)
+    owner_id BIGINT NOT NULL,
+    FOREIGN KEY (status_id) REFERENCES status(id),
+    FOREIGN KEY (owner_id) REFERENCES user(id)
 )

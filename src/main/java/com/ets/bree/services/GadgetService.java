@@ -3,8 +3,10 @@ package com.ets.bree.services;
 import com.ets.bree.dtos.GadgetDto;
 import com.ets.bree.models.Gadget;
 import com.ets.bree.models.Status;
+import com.ets.bree.models.User;
 import com.ets.bree.repositories.GadgetRepository;
 import com.ets.bree.repositories.StatusRepository;
+import com.ets.bree.repositories.UserRepository;
 import com.ets.bree.utils.EncryptingUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class GadgetService {
 
     @Autowired
     private StatusRepository statusRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private Random random;
 
@@ -55,9 +60,13 @@ public class GadgetService {
         BeanUtils.copyProperties(dto, gadget);
         gadget.setToken(generateToken());
         Optional<Status> status = statusRepository.findById(dto.statusID());
-        return status.map(s -> {
+        return status.flatMap(s -> {
            gadget.setStatus(s);
-           return repository.save(gadget);
+           Optional<User> owner = userRepository.findById(dto.ownerID());
+           return owner.map(o -> {
+               gadget.setOwner(o);
+               return repository.save(gadget);
+           });
         });
     }
 
@@ -73,6 +82,10 @@ public class GadgetService {
                     case "statusID" -> {
                         Optional<Status> status = statusRepository.findById((long)value);
                         status.ifPresent(g::setStatus);
+                    }
+                    case "ownerID" -> {
+                        Optional<User> owner = userRepository.findById((long)value);
+                        owner.ifPresent(g::setOwner);
                     }
                 }
             });

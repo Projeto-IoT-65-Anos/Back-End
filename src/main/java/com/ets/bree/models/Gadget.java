@@ -26,6 +26,10 @@ public class Gadget {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     public long getId() {
         return id;
     }
@@ -72,5 +76,13 @@ public class Gadget {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
