@@ -87,4 +87,12 @@ public class DeviceService {
         return repository.save(d);
         });
     }
+
+    public Optional<Device> delete(long id) {
+        Optional<Device> device = repository.findById(id);
+        return device.map(d -> {
+            repository.delete(d);
+            return d;
+        });
+    }
 }
