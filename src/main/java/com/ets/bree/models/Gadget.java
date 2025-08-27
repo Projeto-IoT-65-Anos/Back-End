@@ -19,6 +19,9 @@ public class Gadget {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "location")
+    private String location;
+
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
@@ -53,6 +56,14 @@ public class Gadget {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Status getStatus() {
