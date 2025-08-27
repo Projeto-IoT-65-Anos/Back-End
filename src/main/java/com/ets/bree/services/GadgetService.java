@@ -92,4 +92,12 @@ public class GadgetService {
             return repository.save(g);
         });
     }
+
+    public Optional<Gadget> delete(long id){
+        Optional<Gadget> gadget = repository.findById(id);
+        return gadget.map(g -> {
+            repository.delete(g);
+            return g;
+        });
+    }
 }
