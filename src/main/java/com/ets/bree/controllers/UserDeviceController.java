@@ -29,6 +29,20 @@ public class UserDeviceController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<UserDevice>> getUserDeviceByUser(@PathVariable long id) {
+        return service.findByUser(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<UserDevice>> getUserDeviceByDevice(@PathVariable long id) {
+        return service.findByDevice(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<UserDevice> postUserDevice(@RequestBody UserDeviceDto dto) {
         return service.post(dto)

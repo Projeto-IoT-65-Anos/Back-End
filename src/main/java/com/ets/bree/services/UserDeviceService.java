@@ -29,6 +29,16 @@ public class UserDeviceService {
         return repository.findAll();
     }
 
+    public Optional<List<UserDevice>> findByUser(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(u -> repository.findByUser(u));
+    }
+
+    public Optional<List<UserDevice>> findByDevice(long id) {
+        Optional<Device> device = deviceRepository.findById(id);
+        return device.map(d -> repository.findByDevice(d));
+    }
+
     public Optional<UserDevice> findUserDevice(long id) {
         return repository.findById(id);
     }
