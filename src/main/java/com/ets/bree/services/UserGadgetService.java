@@ -39,6 +39,11 @@ public class UserGadgetService {
         return user.map(u -> repository.findByUser(u));
     }
 
+    public Optional<List<UserGadget>> findUserGadgetByGadget(long id){
+        Optional<Gadget> gadget = gadgetRepository.findById(id);
+        return gadget.map(g -> repository.findByGadget(g));
+    }
+
     public Optional<UserGadget> post(UserGadgetDto dto) {
         UserGadget userGadget = new UserGadget();
         Optional<User> user = userRepository.findById(dto.userID());
