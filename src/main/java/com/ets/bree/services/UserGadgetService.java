@@ -46,4 +46,12 @@ public class UserGadgetService {
            });
         });
     }
+
+    public Optional<UserGadget> delete(long id) {
+        Optional<UserGadget> userGadget = repository.findById(id);
+        return userGadget.map(ug -> {
+            repository.delete(ug);
+            return ug;
+        });
+    }
 }
