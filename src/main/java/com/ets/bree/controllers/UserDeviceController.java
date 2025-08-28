@@ -36,7 +36,7 @@ public class UserDeviceController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/device/{id}")
     public ResponseEntity<List<UserDevice>> getUserDeviceByDevice(@PathVariable long id) {
         return service.findByDevice(id)
                 .map(ResponseEntity::ok)
