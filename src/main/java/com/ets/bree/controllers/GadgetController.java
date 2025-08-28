@@ -4,6 +4,7 @@ import com.ets.bree.dtos.GadgetDto;
 import com.ets.bree.models.Gadget;
 import com.ets.bree.services.GadgetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,4 +28,12 @@ public class GadgetController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping
+    public ResponseEntity<Gadget> postGadget(@RequestBody GadgetDto dto) {
+        return service.post(dto)
+                .map(g -> ResponseEntity.status(HttpStatus.CREATED).body(g))
+                .orElse(ResponseEntity.notFound().build());
+    }
+    
 }
