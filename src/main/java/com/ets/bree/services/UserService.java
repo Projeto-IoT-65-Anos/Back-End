@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -21,6 +23,12 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private AccessLevelRepository accessLevelRepository;
+
+    private boolean validateEmail(String email) {
+        Pattern pattern = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$\n");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
     public List<User> findAll() {
         return repository.findAll();
@@ -33,6 +41,9 @@ public class UserService {
     public Optional<User> post(UserDto dto) {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
+        if(!validateEmail(dto.email())) {
+            return Optional.empty();
+        }
         user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
         Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
         return accessLevel.map(level -> {

@@ -47,7 +47,7 @@ public class UserGadgetController {
     public ResponseEntity<UserGadget> postUserGadget(@RequestBody UserGadgetDto dto) {
         return service.post(dto)
                 .map(ug -> ResponseEntity.status(HttpStatus.CREATED).body(ug))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/{id}")

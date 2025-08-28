@@ -34,7 +34,7 @@ public class UserController {
     public ResponseEntity<User> postUser(@RequestBody UserDto dto) {
         Optional<User> user = service.post(dto);
         return user.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")

@@ -47,7 +47,7 @@ public class UserDeviceController {
     public ResponseEntity<UserDevice> postUserDevice(@RequestBody UserDeviceDto dto) {
         return service.post(dto)
                 .map(ud -> ResponseEntity.status(HttpStatus.CREATED).body(ud))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/{id}")

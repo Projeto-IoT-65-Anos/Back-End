@@ -34,7 +34,7 @@ public class GadgetController {
     public ResponseEntity<Gadget> postGadget(@RequestBody GadgetDto dto) {
         return service.post(dto)
                 .map(g -> ResponseEntity.status(HttpStatus.CREATED).body(g))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/{id}")

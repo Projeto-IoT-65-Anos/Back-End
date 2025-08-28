@@ -33,7 +33,7 @@ public class RegisterController {
     public ResponseEntity<Register> postRegister(@RequestBody RegisterDto dto) {
         return service.post(dto)
                 .map(r -> ResponseEntity.status(HttpStatus.CREATED).body(r))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/{id}")

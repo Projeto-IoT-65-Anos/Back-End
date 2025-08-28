@@ -34,7 +34,7 @@ public class DeviceController {
     public ResponseEntity<Device> postDevice(@RequestBody DeviceDto dto) {
         return service.post(dto)
                 .map(d -> ResponseEntity.status(HttpStatus.CREATED).body(d))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @PatchMapping("/{id}")
