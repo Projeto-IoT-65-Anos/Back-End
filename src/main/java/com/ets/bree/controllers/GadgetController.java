@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/gadgets")
@@ -35,5 +36,13 @@ public class GadgetController {
                 .map(g -> ResponseEntity.status(HttpStatus.CREATED).body(g))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteGadget(@PathVariable long id) {
+        return service.delete(id)
+                .map(_ -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     
 }
