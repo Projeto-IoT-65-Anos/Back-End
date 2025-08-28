@@ -5,9 +5,9 @@ import com.ets.bree.models.AccessLevel;
 import com.ets.bree.models.User;
 import com.ets.bree.repositories.AccessLevelRepository;
 import com.ets.bree.repositories.UserRepository;
-import com.ets.bree.utils.EncryptingUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +23,8 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private AccessLevelRepository accessLevelRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     private boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$\n");
@@ -44,7 +46,7 @@ public class UserService {
         if(!validateEmail(dto.email())) {
             return Optional.empty();
         }
-        user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
+        user.setPasswordHash(encoder.encode(dto.password()));
         Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
         return accessLevel.map(level -> {
             user.setAccessLevel(level);
@@ -56,7 +58,7 @@ public class UserService {
         Optional<User> oUser = repository.findById(id);
         return oUser.map(user -> {
             if(dto.name() != null) user.setName(dto.name());
-            if(dto.password() != null) user.setPasswordHash(EncryptingUtils.encrypt(dto.password()));
+            if(dto.password() != null) user.setPasswordHash(encoder.encode(dto.password()));
             if(dto.accessLevelID() != null) {
                 Optional<AccessLevel> level = accessLevelRepository.findById(dto.accessLevelID());
                 AccessLevel accessLevel = level.flatMap(_ -> level).orElse(oUser.get().getAccessLevel());
@@ -74,7 +76,7 @@ public class UserService {
                 switch (property)
                         {
                             case "name" -> u.setName((String)value);
-                            case "password" -> u.setPasswordHash(EncryptingUtils.encrypt((String)value));
+                            case "password" -> u.setPasswordHash(encoder.encode((String)value));
                             case "accessLevelID" -> {
                                 Optional<AccessLevel> level = accessLevelRepository.findById(((Integer)value).longValue());
                                 level.ifPresent(u::setAccessLevel);

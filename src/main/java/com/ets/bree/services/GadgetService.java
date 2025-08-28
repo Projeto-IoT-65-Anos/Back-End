@@ -7,7 +7,6 @@ import com.ets.bree.models.User;
 import com.ets.bree.repositories.GadgetRepository;
 import com.ets.bree.repositories.StatusRepository;
 import com.ets.bree.repositories.UserRepository;
-import com.ets.bree.utils.EncryptingUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
