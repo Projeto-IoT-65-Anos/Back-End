@@ -1,6 +1,8 @@
 package com.ets.bree.services;
 
+import com.ets.bree.dtos.UserGadgetDto;
 import com.ets.bree.models.Gadget;
+import com.ets.bree.models.User;
 import com.ets.bree.models.UserGadget;
 import com.ets.bree.repositories.GadgetRepository;
 import com.ets.bree.repositories.UserGadgetRepository;
@@ -30,5 +32,18 @@ public class UserGadgetService {
     public Optional<UserGadget> findUserGadget(long id) {
         Optional<UserGadget> userGadget = repository.findById(id);
         return userGadget.map(ug -> ug);
+    }
+
+    public Optional<UserGadget> post(UserGadgetDto dto) {
+        UserGadget userGadget = new UserGadget();
+        Optional<User> user = userRepository.findById(dto.userID());
+        return user.flatMap(u -> {
+           Optional<Gadget> gadget = gadgetRepository.findById(dto.gadgetID());
+           return gadget.map(g -> {
+               userGadget.setUser(u);
+               userGadget.setGadget(g);
+               return repository.save(userGadget);
+           });
+        });
     }
 }
