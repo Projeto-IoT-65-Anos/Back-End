@@ -44,5 +44,10 @@ public class GadgetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    
+    @PatchMapping("/{id}")
+    public ResponseEntity<Gadget> patchGadget(@PathVariable long id, @RequestBody Map<String, Object> fields) {
+        return service.patch(id, fields)
+                .map(g -> ResponseEntity.accepted().body(g))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
