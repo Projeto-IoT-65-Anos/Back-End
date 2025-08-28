@@ -29,7 +29,7 @@ public class GadgetService {
     @Autowired
     private UserRepository userRepository;
 
-    private Random random;
+    private final Random random = new Random();
 
     private String generateToken() {
         int length = 16;
