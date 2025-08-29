@@ -26,11 +26,11 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
-    private boolean validateEmail(String email) {
+    /*private boolean validateEmail(String email) {
         Pattern pattern = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$\n");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
-    }
+    }*/
 
     public List<User> findAll() {
         return repository.findAll();
@@ -43,9 +43,9 @@ public class UserService {
     public Optional<User> post(UserDto dto) {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-        if(!validateEmail(dto.email())) {
+       /* if(!validateEmail(dto.email())) {
             return Optional.empty();
-        }
+        }*/
         user.setPasswordHash(encoder.encode(dto.password()));
         Optional<AccessLevel> accessLevel = accessLevelRepository.findById(dto.accessLevelID());
         return accessLevel.map(level -> {
