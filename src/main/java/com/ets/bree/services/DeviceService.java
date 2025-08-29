@@ -9,6 +9,7 @@ import com.ets.bree.repositories.StatusRepository;
 import com.ets.bree.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,8 @@ public class DeviceService {
     private StatusRepository statusRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     Random random = new Random();
 
@@ -37,7 +40,7 @@ public class DeviceService {
             }
             String identifier = builder.toString();
             int num = random.nextInt(6969);
-            token = identifier + "-" + EncryptingUtils.encrypt(String.valueOf(num)).substring(0, 16);
+            token = identifier + "-" + encoder.encode(String.valueOf(num)).substring(0, 16);
         } while(repository.existsByToken(token));
         return token;
     }
